@@ -33,6 +33,7 @@ const getVideo = async() => {
 
         const { id, title } = data
         log(`- ${id}: ${title}`)
+        console.log('nice')
 
         return data
     }
@@ -167,7 +168,7 @@ const main = async(config) => {
 
         await async.waterfall([
             getVideo,
-            downloadVideo
+            // downloadVideo
             // getMediaIds,
             // tweet,
             // updateDatabase
