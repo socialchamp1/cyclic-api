@@ -3,7 +3,7 @@ const reqlib = require('app-root-path').require
 require('dotenv').config({ path: appRoot + '/.env' })
 
 // Middleware
-const log = reqlib('/helpers/logger')
+const log = reqlib('/helpers/log')
 
 // Global
 const { DB_USER, DB_PASS } = process.env

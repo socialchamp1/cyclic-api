@@ -10,16 +10,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "app-root-path": "^3.0.0",
-    "async": "^3.2.3",
+    "app-root-path": "^3.1.0",
+    "async": "^3.2.4",
     "axios": "^0.27.2",
     "chalk": "^4.1.2",
     "dotenv": "^16.0.2",
+    "download": "^8.0.0",
     "fs-extra": "^10.1.0",
-    "knex": "^2.0.0",
+    "knex": "^2.3.0",
     "lodash": "^4.17.21",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "mysql2": "^2.3.3",
-    "winston": "^3.7.2"
+    "twitter-api-v2": "^1.12.7"
   }
 }
