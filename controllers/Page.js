@@ -43,12 +43,12 @@ router.post('/twitter/video', async(req, res) => {
         datas.redgifs = redgifsData
     
         const client = new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
-        const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'twitter'))
+        const folder = path.join(os.tmpdir(), 'twitter-')
     
         // Download video to local tmp folder
         const ext = 'mp4'
         const filename = redgifsId + '.' + ext
-        const filepath = folder + '/' +filename
+        const filepath = folder + '/' + filename
         const options = { filename }
     
         await dlRedgif(vidUrl, folder, options)
@@ -68,7 +68,7 @@ router.post('/twitter/video', async(req, res) => {
 
 const dlRedgif = async(vidUrl, folder, options) => {
     const { filename } = options
-    const filepath = folder + filename
+    const filepath = folder + '/' + filename
 
     return new Promise((resolve, reject) =>
         axios({
