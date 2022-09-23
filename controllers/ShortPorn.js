@@ -129,7 +129,7 @@ router.get('/', async(req, res) => {
     try{
         const result = await async.waterfall([
             getVideo,
-            downloadVideo
+            // downloadVideo
             // getMediaIds,
             // tweet,
             // updateDatabase
