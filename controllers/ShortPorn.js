@@ -105,9 +105,10 @@ router.get('/', async(req, res) => {
     let errorMsg = ''
     let datas = { error, errorMsg }
 
+    await fs.ensureDir(appRoot + '/tes/')
+
     const files = await fs.readdir('./')
-    console.log(appRoot)
-    return res.json(appRoot)
+    return res.json(files)
 
     // @japanontops
     const config = {
