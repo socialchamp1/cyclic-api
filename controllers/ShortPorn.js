@@ -105,10 +105,15 @@ router.get('/', async(req, res) => {
     let errorMsg = ''
     let datas = { error, errorMsg }
 
-    await fs.ensureDir(appRoot + '/tes/')
+    const os = require('os');
+    const path = require('path');
 
-    const files = await fs.readdir('./')
-    return res.json(files)
+    const appPrefix = 'my-app';
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
+
+    const files1 = await fs.readdir('./')
+    const files2 = await fs.readdir(appRoot)
+    return res.json({ files1, files2 })
 
     // @japanontops
     const config = {
