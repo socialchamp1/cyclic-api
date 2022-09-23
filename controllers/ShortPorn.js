@@ -106,8 +106,8 @@ router.get('/', async(req, res) => {
     let datas = { error, errorMsg }
 
     const files = await fs.readdir('./')
-    console.log(files)
-    return res.json(files)
+    console.log(appRoot)
+    return res.json(appRoot)
 
     // @japanontops
     const config = {
