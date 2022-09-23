@@ -26,7 +26,7 @@ const main = async () => {
         
         const { data } = await axios({
             method: 'post',
-            url: 'https://jot.cyclic.app/hahaha',
+            url: 'https://jot.cyclic.app/tes2',
             data: { 
                 appKey: 'EHD9c6ZebGxQISVfcOac6Bbvw',
                 appSecret: 'coIGhDnMDFeCVSVXAaI5WnJctR4SK7Brzq5BXBoVlGuvVC0VIN',
