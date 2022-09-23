@@ -81,9 +81,10 @@ const downloadVideo = async(post) => {
         log(`- ${vidUrl}`)
 
         // Empty tmp folder
-        const folder = appRoot + '/public/twitter/'
-        await fs.ensureDir(folder)
-        await fs.emptyDir(folder)
+        const folder = appRoot
+        // const folder = appRoot + '/public/twitter/'
+        // await fs.ensureDir(folder)
+        // await fs.emptyDir(folder)
 
         // Download video to local tmp folder
         const ext = 'mp4'
