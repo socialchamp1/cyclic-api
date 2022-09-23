@@ -2,9 +2,6 @@ const appRoot = require('app-root-path')
 const reqlib = require('app-root-path').require
 require('dotenv').config({ path: appRoot + '/.env' })
 
-// Middleware
-const log = reqlib('/helpers/log')
-
 // Global
 const { DB_USER, DB_PASS } = process.env
 
@@ -34,8 +31,6 @@ const main = (dbname, dbport) => {
     }
 
     config.connection = connection
-    log(`Connected to database ${dbname} on port ${dbport}`, 4)
-
     return require('knex')(config)
 }
 

@@ -1,38 +1,29 @@
-const appRoot = require('app-root-path')
-const reqlib = require('app-root-path').require
+global.reqlib = require('app-root-path').require
+global.appRoot = require('app-root-path')
 require('dotenv').config({ path: appRoot + '/.env' })
 
-// Bot
-const twitter = reqlib('/apps/twitter')
+const express = require('express')
+const app = express()
+const PORT = process.env.PORT || 3000
 
-// Vars
-const db = reqlib('/knex')('shortporns')
+// Express
+app.set('view engine', 'pug')
+app.set('json spaces', 2)
+app.use(express.urlencoded({ limit: '5mb', extended: true }))
+app.use(express.json({ limit: '5mb' }))
+app.use(express.static('public'))
 
-// Twitter @JapanOnTop
-const japan = {
-    db,
-    subreddits: [
-        'JAVUncensored',
-        'NSFW_Japan', 
-        'javdreams', 
-        'ilovejav', 
-        'JapaneseKissing', 
-        'JAVboratory', 
-        'PetiteJAV'
-    ],
-    twitter: {
-        appKey: 'EHD9c6ZebGxQISVfcOac6Bbvw',
-        appSecret: 'coIGhDnMDFeCVSVXAaI5WnJctR4SK7Brzq5BXBoVlGuvVC0VIN',
-        accessToken: '1510811050559815681-jUOCSUWrI4PrS4MEYlKKCPIzlVZsYT',
-        accessSecret: 'ar7Y8XY0DRhCSMPdPPTBxJUmIvFqBee2broXze2v9BymU',
-    }
-}
+// Routes
+app.use('/', reqlib('/controllers/Page'))
+app.use('/shortporn', reqlib('/controllers/ShortPorn'))
 
-const main = async() => {
-    try{
-        await twitter(japan)
-    }
-    catch(e) { console.log(e) }
-}
+// 404
+app.all("*", (req, res, next) => res.status(404).render("404", { meta: { title: 'Page Not Found' } }))
 
-main()
+// Error
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.render("error", { meta: { title: 'Bad Request' } })
+})
+
+app.listen(PORT, () => { console.log(`Example app listening at http://localhost:${PORT}`) })

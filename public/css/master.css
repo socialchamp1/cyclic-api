@@ -1,0 +1,159 @@
+body, html{
+    overflow-x: hidden;
+}
+
+.page-link, .dataTables_info{
+    font-size: 14px !important;
+}
+
+.text-decoration-underline, .text-underline{
+    text-decoration: underline;
+}
+
+.text-pink{
+    color: #e83e8c !important;
+}
+
+.bg-pink{
+    background-color: #e83e8c !important;
+}
+
+.lh-2{
+    line-height: 2;
+}
+
+.readmore{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* 404 Page */
+.h-404 {
+    height: calc(100vh - 200px);
+}
+
+@media (max-width: 767px) {
+    .dataTables_info {
+        display: none
+    }
+}
+
+/* simple overlay plugin overide */
+.sl-overlay{
+    background: black;
+}
+.sl-navigation button, .sl-counter, .sl-close{
+    color: white !important;
+}
+
+#gallery{
+    display: flex;
+    flex-wrap: wrap;
+    margin: -8px;
+    align-content: flex-start;
+}
+
+#gallery a{
+    flex-grow: 1;
+    /* max-width: 25%; */
+    padding: 4px;
+}
+.grid-item{ width: 25%; }
+
+/* table overide */
+.table-hover tbody tr:hover{
+    background-color: #F3F1F5;
+}
+
+#loader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 0px 30px 0px;
+}
+
+.featured-post {
+    max-height: 300px; 
+}
+
+.post-pb {
+    max-height: 350px;    
+}
+
+.post-clip{
+    max-height: 150px;
+}
+
+.featured-post, .post-pb, .post-clip {
+    overflow: hidden; 
+    background:url('/img/bg-featured.png')
+}
+
+.actress{
+    padding: 15px 0;
+}
+
+/* jquery validate plugins */
+label.error{
+    margin: 10px 0 0 0;
+    color: #FC4F4F;
+}
+
+.select2-container{
+    width: 100% !important;
+}
+
+@media only screen and (max-width: 768px) {
+    .grid-item{ width: 33.3333333333%; }
+}
+
+@media only screen and (max-width: 480px) {
+    .grid-item{ width: 50%; }
+    .block-content{ padding: 10px !important;  }
+    .block-content.block-content-full{ padding: 10px !important;  }
+    .actress{ padding: 5px 0; }
+}
+
+span.duration{
+    color: white;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.modal.show{
+    background-color: rgb(34, 40, 49, .9);
+}
+
+#mdp-deblocker-js-disabled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 999999;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #000000;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ouo{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:9999999;
+    background-color: transparent;
+    cursor: default;
+}
+
+.lang-icon{
+    max-width: 25px;
+    align-self: center;
+}

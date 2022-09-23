@@ -1,0 +1,24 @@
+-
+    const menus = {}
+
+mixin menu_li(href, cls, id, target, title)
+    li: a(href=href class=cls id=id target=target)= title
+
+mixin menu 
+    each menu, i in menus
+        if !menu.submenu
+            //- Without submenu
+            - const mUrl = menu.url ?? 'javascript:void(0);'
+            - const mActive = (meta.active == i) && 'active'
+
+            +menu_li(mUrl, mActive, '', menu.target, menu.title)
+        else 
+            //- With submenu
+            li(class= (i == meta.parent) ? 'open' : '')
+                a.nav-submenu(href='#' data-toggle='nav-submenu')= menu.title
+                ul
+                    each submenu, j in menu.submenu
+                        - const sUrl = submenu.url ?? 'javascript:void(0);'
+                        - const sActive = (meta.active == submenu.active) && 'active'
+
+                        +menu_li(sUrl, sActive, submenu.id, submenu.target, submenu.title)
