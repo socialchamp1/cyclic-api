@@ -68,7 +68,7 @@ router.post('/twitter/video', async(req, res) => {
     }
 })
 
-router.post('/hahaha', async(req, res) => {
+router.post('/tes1', async(req, res) => {
     let datas = { error: false }
 
     try{
@@ -79,6 +79,24 @@ router.post('/hahaha', async(req, res) => {
         const client = new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
         const mediaId = await client.v1.uploadMedia(filepath)
         datas.mediaId = mediaId
+    }
+    catch(e) {
+        datas.error = true
+        datas.errorMsg = e.message
+    }
+    finally{
+        res.json(datas)
+    }
+})
+
+router.post('/tes2', async(req, res) => {
+    let datas = { error: false }
+
+    try{
+        const folder = os.tmpdir()
+    
+        const files = await fs.readdir(folder)
+        datas.files = files
     }
     catch(e) {
         datas.error = true
