@@ -15,6 +15,7 @@ const prettyDate = reqlib('/helpers/prettyDate')
 const awaitHandler = reqlib('/helpers/awaitHandler')
 
 // Vars
+let folder
 let subreddits
 let twitterCredentials
 const db = reqlib('/knex')('redgifs')
@@ -85,7 +86,10 @@ const downloadVideo = async(post) => {
         // Empty tmp folder
         // const folder = appRoot + '/tmp'
         // await fs.emptyDir(folder)
-        const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'tmp'))
+
+        // cyclic.sh ga bs buat folder krna pake AWS Lambda
+        // Solusi nya pake temporary directory
+        folder = fs.mkdtempSync(path.join(os.tmpdir()))
 
         // Download video to local tmp folder
         const ext = 'mp4'
@@ -146,6 +150,7 @@ router.get('/', async(req, res) => {
         console.log(e)
     }
     finally{
+        fs.rmSync(folder, { recursive: true })
         res.json(datas)
     }
 })
