@@ -26,7 +26,7 @@ const main = async () => {
         
         const { data } = await axios({
             method: 'post',
-            url: 'https://jot.cyclic.app/shortporn/twitter/video',
+            url: 'https://jot.cyclic.app/twitter/video',
             data: { 
                 appKey: 'EHD9c6ZebGxQISVfcOac6Bbvw',
                 appSecret: 'coIGhDnMDFeCVSVXAaI5WnJctR4SK7Brzq5BXBoVlGuvVC0VIN',
