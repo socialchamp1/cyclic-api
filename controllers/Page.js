@@ -19,10 +19,11 @@ router.get('/', awaitHandler(async(req, res) => {
 // Upload video to twitter
 router.post('/twitter/video', async(req, res) => {
     let datas = { error: false }
+    return res.json(datas)
 
     try{
         const { appKey, appSecret, accessToken, accessSecret, redgifsId } = req.body
-        
+
         if(!redgifsId) {
             datas.error = true
             datas.errorMsg = 'redgifsId can not empty!'
