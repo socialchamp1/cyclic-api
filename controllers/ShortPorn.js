@@ -81,7 +81,7 @@ const downloadVideo = async(post) => {
         log(`- ${vidUrl}`)
 
         // Empty tmp folder
-        const folder = appRoot + '/tmp/twitter/'
+        const folder = appRoot + '/public/twitter/'
         await fs.ensureDir(folder)
         await fs.emptyDir(folder)
 
@@ -129,7 +129,7 @@ router.get('/', async(req, res) => {
     try{
         const result = await async.waterfall([
             getVideo,
-            // downloadVideo
+            downloadVideo
             // getMediaIds,
             // tweet,
             // updateDatabase
