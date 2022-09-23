@@ -53,7 +53,7 @@ router.post('/twitter/video', async(req, res) => {
     
         await dlRedgif(vidUrl, folder, options)
 
-        data.filepath = filepath
+        datas.filepath = filepath
     
         // Upload video to twitter
         // const mediaId = await client.v1.uploadMedia(filepath)
