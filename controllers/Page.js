@@ -17,46 +17,54 @@ router.get('/', awaitHandler(async(req, res) => {
 }))
 
 // Upload video to twitter
-router.post('/twitter/video', awaitHandler(async(req, res) => {
-    const { appKey, appSecret, accessToken, accessSecret, redgifsId } = req.body
-    const datas = { error: false }
+router.post('/twitter/video', async(req, res) => {
+    let datas = { error: false }
 
-    if(!redgifsId) {
-        datas.error = true
-        datas.errorMsg = 'redgifsId can not empty!'
-        return res.json(datas)
+    try{
+        const { appKey, appSecret, accessToken, accessSecret, redgifsId } = req.body
+        
+        if(!redgifsId) {
+            datas.error = true
+            datas.errorMsg = 'redgifsId can not empty!'
+            return res.json(datas)
+        }
+    
+        if(!appKey || !appSecret || !accessToken || !accessSecret) {
+            datas.error = true
+            datas.errorMsg = 'missing twitter parameters!'
+            return res.json(datas)
+        }
+    
+        // Get redgifs video data
+        const url = 'https://api.redgifs.com/v2/gifs/' + redgifsId
+        const { data: redgifsData } = await axios(url)
+    
+        const vidUrl = redgifsData.gif.urls.hd
+        datas.redgifs = redgifsData
+    
+        const client = new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
+        const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'twitter'))
+    
+        // Download video to local tmp folder
+        const ext = 'mp4'
+        const filename = redgifsId + '.' + ext
+        const filepath = folder + '/' +filename
+        const options = { filename }
+    
+        await dlRedgif(vidUrl, folder, options)
+    
+        // Upload video to twitter
+        const mediaId = await client.v1.uploadMedia(filepath)
+        datas.mediaId = mediaId
     }
-
-    if(!appKey || !appSecret || !accessToken || !accessSecret) {
+    catch(e) {
         datas.error = true
-        datas.errorMsg = 'missing twitter parameters!'
-        return res.json(datas)
+        datas.errorMsg = e.message
     }
-
-    // Get redgifs video data
-    const url = 'https://api.redgifs.com/v2/gifs/' + redgifsId
-    const { data: redgifsData } = await axios(url)
-
-    const vidUrl = redgifsData.gif.urls.hd
-    datas.redgifs = redgifsData
-
-    const client = new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
-    const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'twitter'))
-
-    // Download video to local tmp folder
-    const ext = 'mp4'
-    const filename = redgifsId + '.' + ext
-    const filepath = folder + '/' +filename
-    const options = { filename }
-
-    await dlRedgif(vidUrl, folder, options)
-
-    // Upload video to twitter
-    const mediaId = await client.v1.uploadMedia(filepath)
-    datas.mediaId = mediaId
-
-    res.json(datas)
-}))
+    finally{
+        res.json(datas)
+    }
+})
 
 const dlRedgif = async(vidUrl, folder, options) => {
     const { filename } = options
