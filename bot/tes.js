@@ -24,9 +24,9 @@ const main = async () => {
         const post = await db('posts').where('isTwitter', false).orderBy('id', 'desc').first()
         const { redgifsId } = post
         
-        const { data } = await axios({
+        const { data: data1 } = await axios({
             method: 'post',
-            url: 'https://jot.cyclic.app/tes2',
+            url: 'https://jot.cyclic.app/redgifs/download',
             data: { 
                 appKey: 'EHD9c6ZebGxQISVfcOac6Bbvw',
                 appSecret: 'coIGhDnMDFeCVSVXAaI5WnJctR4SK7Brzq5BXBoVlGuvVC0VIN',
@@ -36,7 +36,19 @@ const main = async () => {
             }
         })
 
-        console.log(data)
+        const { filepath } = data1
+
+        const { data: data2 } = await axios({
+            method: 'post',
+            url: 'https://jot.cyclic.app/twitter/upload',
+            data: { 
+                appKey: 'EHD9c6ZebGxQISVfcOac6Bbvw',
+                appSecret: 'coIGhDnMDFeCVSVXAaI5WnJctR4SK7Brzq5BXBoVlGuvVC0VIN',
+                accessToken: '1510811050559815681-jUOCSUWrI4PrS4MEYlKKCPIzlVZsYT',
+                accessSecret: 'ar7Y8XY0DRhCSMPdPPTBxJUmIvFqBee2broXze2v9BymU',
+                redgifsId,
+            }
+        })
     }
     catch(e) { console.log(e) }
     finally{ db.destroy() }

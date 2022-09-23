@@ -16,8 +16,8 @@ router.get('/', awaitHandler(async(req, res) => {
     res.render('home')
 }))
 
-// Upload video to twitter
-router.post('/twitter/video', async(req, res) => {
+// Download redgifs video to local folder
+router.post('/redgifs/download', async(req, res) => {
     let datas = { error: false }
 
     try{
@@ -53,14 +53,6 @@ router.post('/twitter/video', async(req, res) => {
         await dlRedgif(vidUrl, folder, options)
 
         datas.filepath = filepath
-
-        const files = await fs.readdir(folder)
-        datas.files = files
-    
-        // Upload video to twitter
-        // const client = new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
-        // const mediaId = await client.v1.uploadMedia(filepath)
-        // datas.mediaId = mediaId
     }
     catch(e) {
         datas.error = true
@@ -71,35 +63,17 @@ router.post('/twitter/video', async(req, res) => {
     }
 })
 
-router.post('/tes1', async(req, res) => {
+// Upload video to twitter
+router.post('/twitter/upload', async(req, res) => {
     let datas = { error: false }
 
     try{
-        const { appKey, appSecret, accessToken, accessSecret } = req.body
-        const filepath = path.join(os.tmpdir(), 'oblongbitesizednightheron.mp4')
+        const { appKey, appSecret, accessToken, accessSecret, filepath } = req.body
     
         // Upload video to twitter
         const client = new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
         const mediaId = await client.v1.uploadMedia(filepath)
         datas.mediaId = mediaId
-    }
-    catch(e) {
-        datas.error = true
-        datas.errorMsg = e.message
-    }
-    finally{
-        res.json(datas)
-    }
-})
-
-router.post('/tes2', async(req, res) => {
-    let datas = { error: false }
-
-    try{
-        const folder = os.tmpdir()
-    
-        const files = await fs.readdir(folder)
-        datas.files = files
     }
     catch(e) {
         datas.error = true
