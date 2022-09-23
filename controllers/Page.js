@@ -41,12 +41,12 @@ router.post('/twitter/video', awaitHandler(async(req, res) => {
     datas.redgifs = redgifsData
 
     const client = new TwitterApi({ appKey, appSecret, accessToken, accessSecret })
-    const folder = fs.mkdtempSync(path.join(os.tmpdir()))
+    const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'twitter'))
 
     // Download video to local tmp folder
     const ext = vidUrl ? vidUrl.split('.').pop() : 'mp4'
     const filename = getRandomInt(10, 10000) + '.' + ext
-    const filepath = folder + filename
+    const filepath = folder + '/' + filename
     const options = { filename }
 
     await download(vidUrl, folder, options)
