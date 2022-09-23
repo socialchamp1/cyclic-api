@@ -47,6 +47,8 @@ const dlRedgif = async(vidUrl, folder, options) => {
 // Ambil video yang mau di post ke twitter
 const getVideo = async() => {
     log(`getVideo`, 1)
+    
+    return null
 
     try{
         const { data } = await axios({
@@ -103,6 +105,10 @@ router.get('/', async(req, res) => {
     let errorMsg = ''
     let datas = { error, errorMsg }
 
+    const files = await fs.readdir('./')
+    console.log(files)
+    return res.json(files)
+
     // @japanontops
     const config = {
         subreddits: [
@@ -128,7 +134,7 @@ router.get('/', async(req, res) => {
     try{
         const result = await async.waterfall([
             getVideo,
-            downloadVideo
+            // downloadVideo
             // getMediaIds,
             // tweet,
             // updateDatabase
