@@ -44,12 +44,12 @@ router.post('/twitter/video', awaitHandler(async(req, res) => {
     const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'twitter'))
 
     // Download video to local tmp folder
-    const ext = vidUrl ? vidUrl.split('.').pop() : 'mp4'
-    const filename = getRandomInt(10, 10000) + '.' + ext
-    const filepath = folder + '/' + filename
+    const ext = 'mp4'
+    const filename = redgifsId + '.' + ext
+    const filepath = folder + '/' +filename
     const options = { filename }
 
-    await download(vidUrl, folder, options)
+    await dlRedgif(vidUrl, folder, options)
 
     // Upload video to twitter
     const mediaId = await client.v1.uploadMedia(filepath)
@@ -57,5 +57,23 @@ router.post('/twitter/video', awaitHandler(async(req, res) => {
 
     res.json(datas)
 }))
+
+const dlRedgif = async(vidUrl, folder, options) => {
+    const { filename } = options
+    const filepath = folder + filename
+
+    return new Promise((resolve, reject) =>
+        axios({
+            method: 'GET',
+            url: vidUrl,
+            responseType: 'stream',
+        })
+        .then(response => {
+            const w = response.data.pipe(fs.createWriteStream(filepath))
+            w.on('finish', () => resolve())
+        })
+        .catch(e => reject(e))
+    )
+}
 
 module.exports = router
