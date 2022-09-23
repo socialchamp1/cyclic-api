@@ -3,7 +3,7 @@ const _ = require('lodash')
 const fs = require('fs-extra')
 const os = require('os')
 const path = require('path')
-const download = require('download')
+const axios = require('axios')
 const router = require('express').Router()
 const { TwitterApi } = require('twitter-api-v2')
 
