@@ -4,6 +4,8 @@ const fs = require('fs-extra')
 const axios = require('axios')
 const async = require('async')
 const { TwitterApi } = require('twitter-api-v2')
+const os = require('os')
+const path = require('path')
 const router = require('express').Router()
 
 // Helpers
@@ -47,8 +49,6 @@ const dlRedgif = async(vidUrl, folder, options) => {
 // Ambil video yang mau di post ke twitter
 const getVideo = async() => {
     log(`getVideo`, 1)
-    
-    return null
 
     try{
         const { data } = await axios({
@@ -83,8 +83,9 @@ const downloadVideo = async(post) => {
         log(`- ${vidUrl}`)
 
         // Empty tmp folder
-        const folder = appRoot + '/tmp'
-        await fs.emptyDir(folder)
+        // const folder = appRoot + '/tmp'
+        // await fs.emptyDir(folder)
+        const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'tmp'))
 
         // Download video to local tmp folder
         const ext = 'mp4'
@@ -104,16 +105,6 @@ router.get('/', async(req, res) => {
     let error = false
     let errorMsg = ''
     let datas = { error, errorMsg }
-
-    const os = require('os');
-    const path = require('path');
-
-    const appPrefix = 'my-app';
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), appPrefix));
-
-    const files1 = await fs.readdir('./')
-    const files2 = await fs.readdir(appRoot)
-    return res.json({ files1, files2 })
 
     // @japanontops
     const config = {
@@ -140,7 +131,7 @@ router.get('/', async(req, res) => {
     try{
         const result = await async.waterfall([
             getVideo,
-            // downloadVideo
+            downloadVideo
             // getMediaIds,
             // tweet,
             // updateDatabase
