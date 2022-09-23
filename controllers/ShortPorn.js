@@ -46,18 +46,17 @@ const dlRedgif = async(vidUrl, folder, options) => {
 
 // Ambil video yang mau di post ke twitter
 const getVideo = async() => {
-    log(`getVideo`)
+    log(`getVideo`, 1)
 
     try{
         const { data } = await axios({
             method: 'post',
-            url: 'http://investasi.api/shortporns',
+            url: 'https://api.investasi-indo.com/shortporns',
             data: { subreddits }
         })
 
         const { id, title } = data
         log(`- ${id}: ${title}`)
-        console.log('nice')
 
         return data
     }
