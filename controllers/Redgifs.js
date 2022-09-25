@@ -9,7 +9,6 @@ const async = require('async')
 const router = require('express').Router()
 
 // Globals
-const dirPost = appRoot + '/data/redgifs/post.json'
 const dirTags = appRoot + '/public/json/tags.json'
 
 // Helpers
@@ -215,9 +214,6 @@ const upload = async(post) => {
         console.log(`- upload success: ${redgifsUrl}`)
 
         post.redgifsUrl = redgifsUrl
-
-        // Save data
-        await fs.writeJson(dirPost, post, { spaces: 2 })
         return post
     }
     catch(e) { console.log(e.stack) }
