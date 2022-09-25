@@ -14,5 +14,6 @@ app.use(express.static('public'))
 
 // Routes
 app.use('/', reqlib('/controllers/Page'))
+app.use('/redgifs', reqlib('/controllers/Redgifs'))
 
 app.listen(PORT, () => { console.log(`Example app listening at http://localhost:${PORT}`) })
