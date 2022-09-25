@@ -106,8 +106,7 @@ const checkTokenExpired = async(access_token) => {
 const generateToken = async(access_token, refresh_token) => {
     try{
         // Check if access token is already expired
-        // const isExpired = await checkTokenExpired(access_token)
-        const isExpired = true
+        const isExpired = await checkTokenExpired(access_token)
 
         if(isExpired) {
             // Expired. Generate new token
