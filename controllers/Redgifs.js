@@ -115,9 +115,11 @@ const generateToken = async(access_token, refresh_token) => {
 
             const { data } = await axios({
                 method: 'post',
-                url: 'https://api.redgifs.com/v2/oauth/refresh',
-                data: {
-                    refresh_token: refresh_token
+                url: 'https://auth.redgifs.com/oauth/token',
+                data: { 
+                    refresh_token,
+                    grant_type: 'refresh_token',
+                    client_id: 'PooPX2zlsAdtRBdVmvyuHyzL2Hz8T4Hd'
                 }
             })
             
