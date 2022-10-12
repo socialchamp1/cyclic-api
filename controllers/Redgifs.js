@@ -135,7 +135,6 @@ router.post('/download', async(req, res) => {
         // Get redgifs video data
         const url = 'https://api.redgifs.com/v2/gifs/' + redgifsId
         const { data: redgifsData } = await axios(url)
-        console.log(redgifsData)
     
         const vidUrl = redgifsData.gif.urls.hd
         datas.redgifs = redgifsData
@@ -146,7 +145,7 @@ router.post('/download', async(req, res) => {
         const filename = redgifsId + '.' + ext
         const filepath = folder + '/' + filename
     
-        // await dlRedgif({ filepath, vidUrl })
+        await dlRedgif({ filepath, vidUrl })
         datas.filepath = filepath
     }
     catch(e) {
