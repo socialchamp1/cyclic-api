@@ -15,7 +15,7 @@ const dirTags = appRoot + '/public/json/tags.json'
 
 // Helpers
 const delay = reqlib('/helpers/delay')
-const dlRedgifs = reqlib('/helpers/dlRedgifs')
+const dlRedgif = reqlib('/helpers/dlRedgif')
 
 router.post('/upload', async(req, res) => {
     let datas = { error: false }
