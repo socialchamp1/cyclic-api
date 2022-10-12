@@ -48,6 +48,37 @@ router.post('/redgifs/download', async(req, res) => {
     }
 })
 
+// Download reddit video to local folder
+router.post('/reddit/download', async(req, res) => {
+    let datas = { error: false }
+
+    try{
+        const { redditVideoUrl, redgifsId } = req.body
+
+        if(!redditVideoUrl) {
+            datas.error = true
+            datas.errorMsg = 'redditVideoUrl can not empty!'
+            return res.json(datas)
+        }
+    
+        // Download video to local tmp folder
+        const ext = 'mp4'
+        const folder = path.join(os.tmpdir())
+        const filename = redgifsId + '.' + ext
+        const filepath = folder + '/' + filename
+    
+        await dlRedgif({ filepath, redditVideoUrl })
+        datas.filepath = filepath
+    }
+    catch(e) {
+        datas.error = true
+        datas.errorMsg = e.message
+    }
+    finally{
+        res.json(datas)
+    }
+})
+
 // Upload video to twitter
 router.post('/twitter/upload', async(req, res) => {
     let datas = { error: false }
