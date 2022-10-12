@@ -54,6 +54,7 @@ router.post('/reddit/download', async(req, res) => {
 
     try{
         const { redditVideoUrl, redgifsId } = req.body
+        console.log({ redditVideoUrl, redgifsId })
 
         if(!redditVideoUrl) {
             datas.error = true
@@ -72,8 +73,9 @@ router.post('/reddit/download', async(req, res) => {
         const folder = path.join(os.tmpdir())
         const filename = redgifsId + '.' + ext
         const filepath = folder + '/' + filename
+        const vidUrl = redditVideoUrl
     
-        await dlRedgif({ filepath, redditVideoUrl })
+        await dlRedgif({ filepath, vidUrl })
         datas.filepath = filepath
     }
     catch(e) {
