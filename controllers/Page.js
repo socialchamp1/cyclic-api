@@ -48,7 +48,7 @@ router.post('/redgifs/download', async(req, res) => {
     }
 })
 
-// Download reddit video to local folder
+// Download reddit video to local folders
 router.post('/reddit/download', async(req, res) => {
     let datas = { error: false }
 
