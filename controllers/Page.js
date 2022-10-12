@@ -48,7 +48,7 @@ router.post('/redgifs/download', async(req, res) => {
     }
 })
 
-// Download reddit video to local folders
+// Download reddit video to local folder
 router.post('/reddit/download', async(req, res) => {
     let datas = { error: false }
 
@@ -58,6 +58,12 @@ router.post('/reddit/download', async(req, res) => {
         if(!redditVideoUrl) {
             datas.error = true
             datas.errorMsg = 'redditVideoUrl can not empty!'
+            return res.json(datas)
+        }
+
+        if(!redgifsId) {
+            datas.error = true
+            datas.errorMsg = 'redgifsId can not empty!'
             return res.json(datas)
         }
     
