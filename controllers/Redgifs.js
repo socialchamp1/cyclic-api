@@ -6,6 +6,8 @@ const _ = require('lodash')
 const fs = require('fs-extra')
 const axios = require('axios')
 const async = require('async')
+const os = require('os')
+const path = require('path')
 const router = require('express').Router()
 
 // Globals
@@ -75,6 +77,89 @@ router.post('/token', async(req, res) => {
         res.json(datas)
     }
 })
+
+router.post('/token/refresh', async(req, res) => {
+    let datas = { error: false }
+
+    try{
+        const { refresh_token } = req.body
+
+        if(!refresh_token) {
+            datas.error = true
+            datas.errorMsg = 'refresh_token can not empty!'
+            return res.json(datas)
+        }
+
+        const { data } = await axios({
+            method: 'post',
+            url: 'https://auth.redgifs.com/oauth/token',
+            data: { 
+                refresh_token,
+                grant_type: 'refresh_token',
+                client_id: 'PooPX2zlsAdtRBdVmvyuHyzL2Hz8T4Hd'
+            }
+        })
+
+        datas.token = data
+    }
+    catch(e) {
+        datas.error = true
+        datas.errorMsg = e.message
+    }
+    finally{
+        res.json(datas)
+    }
+})
+
+// Download redgifs video to local folder
+router.post('/download', async(req, res) => {
+    let datas = { error: false }
+
+    try{
+        const { redgifsId, access_token } = req.body
+
+        if(!redgifsId) {
+            datas.error = true
+            datas.errorMsg = 'redgifsId can not empty!'
+            return res.json(datas)
+        }
+
+        if(!access_token) {
+            datas.error = true
+            datas.errorMsg = 'access_token can not empty!'
+            return res.json(datas)
+        }
+
+        await initAxios(access_token)
+    
+        // Get redgifs video data
+        const url = 'https://api.redgifs.com/v2/gifs/' + redgifsId
+        const { data: redgifsData } = await axios(url)
+        console.log(redgifsData)
+    
+        const vidUrl = redgifsData.gif.urls.hd
+        datas.redgifs = redgifsData
+    
+        // Download video to local tmp folder
+        const ext = 'mp4'
+        const folder = path.join(os.tmpdir())
+        const filename = redgifsId + '.' + ext
+        const filepath = folder + '/' + filename
+    
+        // await dlRedgif({ filepath, vidUrl })
+        datas.filepath = filepath
+    }
+    catch(e) {
+        datas.error = true
+        datas.errorMsg = e.message
+
+        console.log(e)
+    }
+    finally{
+        res.json(datas)
+    }
+})
+
 
 // Set default authorization header
 const initAxios = async(access_token) => {

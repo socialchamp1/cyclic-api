@@ -10,44 +10,6 @@ const { TwitterApi } = require('twitter-api-v2')
 // Home page
 router.get('/', (req, res) => res.send(''))
 
-// Download redgifs video to local folder
-router.post('/redgifs/download', async(req, res) => {
-    let datas = { error: false }
-
-    try{
-        const { redgifsId } = req.body
-
-        if(!redgifsId) {
-            datas.error = true
-            datas.errorMsg = 'redgifsId can not empty!'
-            return res.json(datas)
-        }
-    
-        // Get redgifs video data
-        const url = 'https://api.redgifs.com/v2/gifs/' + redgifsId
-        const { data: redgifsData } = await axios(url)
-    
-        const vidUrl = redgifsData.gif.urls.hd
-        datas.redgifs = redgifsData
-    
-        // Download video to local tmp folder
-        const ext = 'mp4'
-        const folder = path.join(os.tmpdir())
-        const filename = redgifsId + '.' + ext
-        const filepath = folder + '/' + filename
-    
-        await dlRedgif({ filepath, vidUrl })
-        datas.filepath = filepath
-    }
-    catch(e) {
-        datas.error = true
-        datas.errorMsg = e.message
-    }
-    finally{
-        res.json(datas)
-    }
-})
-
 // Download reddit video to local folder
 router.post('/reddit/download', async(req, res) => {
     let datas = { error: false }
