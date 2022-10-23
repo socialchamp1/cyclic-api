@@ -54,16 +54,15 @@ router.post('/reddit/download', async(req, res) => {
             datas.errorMsg = 'redditVideoUrl can not empty!'
             return res.json(datas)
         }
-
-        console.log({redditVideoUrl})
     
         // Download video to local tmp folder
         const ext = 'mp4'
         const folder = path.join(os.tmpdir())
         const filename = redgifsId + '.' + ext
         const filepath = folder + '/' + filename
+        const vidUrl = redditVideoUrl
     
-        await dlRedgif({ filepath, redditVideoUrl })
+        await dlRedgif({ filepath, vidUrl })
         datas.filepath = filepath
     }
     catch(e) {

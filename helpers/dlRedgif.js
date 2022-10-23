@@ -4,8 +4,6 @@ const axios = require('axios')
 module.exports = async(options) => {
     const { filepath, vidUrl } = options
 
-    console.log({vidUrl})
-
     return new Promise((resolve, reject) =>
         axios({
             method: 'GET',
