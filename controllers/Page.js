@@ -33,7 +33,7 @@ router.post('/twitter/upload', async(req, res) => {
 })
 
 // Download reddit video to local folder
-router.post('/download', async(req, res) => {
+router.post('/reddit/download', async(req, res) => {
     let datas = { error: false }
 
     try{
