@@ -1,12 +1,11 @@
 // Modules
-const _ = require('lodash')
-const fs = require('fs-extra')
-const axios = require('axios')
-const async = require('async')
 const os = require('os')
 const path = require('path')
 const router = require('express').Router()
 const { TwitterApi } = require('twitter-api-v2')
+
+// Helpers
+const dlRedgif = reqlib('/helpers/dlRedgif')
 
 // Home page
 router.get('/', (req, res) => res.send(''))
