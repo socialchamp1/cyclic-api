@@ -76,4 +76,31 @@ router.post('/reddit/download', async(req, res) => {
     }
 })
 
+// Get random color from http://www.colourlovers.com
+router.get('/random-color', async(req, res) => {
+    let datas = { error: false }
+
+    try{
+        // const colors = await new Promise((resolve, reject) =>
+        //     COLOURlovers.get('/colors', req.query, 
+        //     function(err, data) {
+        //         if(err) return reject(err)
+        //         resolve(data)
+        //     })
+        // )
+
+        datas.query = req.query
+        datas.params = req.params
+    }
+    catch(e) {
+        datas.error = true
+        datas.errorMsg = e.message
+
+        console.log(e)
+    }
+    finally{
+        res.json(datas)
+    }
+})
+
 module.exports = router
