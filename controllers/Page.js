@@ -1,6 +1,7 @@
 // Modules
 const os = require('os')
 const path = require('path')
+const COLOURlovers = require('colourlovers')
 const router = require('express').Router()
 const { TwitterApi } = require('twitter-api-v2')
 
@@ -81,16 +82,15 @@ router.get('/random-color', async(req, res) => {
     let datas = { error: false }
 
     try{
-        // const colors = await new Promise((resolve, reject) =>
-        //     COLOURlovers.get('/colors', req.query, 
-        //     function(err, data) {
-        //         if(err) return reject(err)
-        //         resolve(data)
-        //     })
-        // )
+        const colors = await new Promise((resolve, reject) =>
+            COLOURlovers.get('/colors', req.query, 
+            function(err, data) {
+                if(err) return reject(err)
+                resolve(data)
+            })
+        )
 
-        datas.query = req.query
-        datas.params = req.params
+        datas.colors = colors
     }
     catch(e) {
         datas.error = true
